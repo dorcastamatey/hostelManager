@@ -764,8 +764,8 @@ function login(){
 	window.location.href="viewStudents.html";
 }
 else {
-	
-window.location.href="login.html";
+	document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-info fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Sorry!!</strong> Password or ID not correct.</div></div>';
+    window.location.href="login.html";
 }
 }
 

@@ -463,32 +463,7 @@ function viewStatus (){
         }
     }
 
-    //  function viewNotReturn(){
-
-    //     include("function.php");
-    //     $obj=new users();
-
-    //     if ($row=$obj->selectNotReturned())
-    //     {
-    //         echo '{"result":1, "message":[';
-    //         while ($row)
-    //         {
-    //             echo json_encode($row);
-
-    //             $row = $obj->fetch (); 
-    //             if ($row){
-    //                 echo ",";
-    //             }
-    //         }
-    //         echo "]}";
-    //         return;
-    //     }
-    //     else{
-    //         echo '{"result":0, "message":"not display"}';
-    //         return;
-    //     }
-    // }
-
+    
     function issuesNotResolved(){
 
         include("function.php");
