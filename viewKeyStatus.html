@@ -4,7 +4,7 @@
     <title>hostel manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" http-equiv="refresh" content="5">
     
-    <!-- Bootstrap -->
+    <!-- Bootstrap       onload="viewKeyStatus();TimedRefresh( 6000)"-->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
@@ -16,7 +16,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body onload="viewKeyStatus();TimedRefresh( 6000)">
+  <body onload="viewKeyStatus(); TimedRefresh( 6000)" >
   	<div class="header">
 	     <div class="container">
 	        <div class="row">
@@ -69,7 +69,7 @@
                     <li><a href="visitors.html"><i class="glyphicon glyphicon-plus"></i> Add a visitor</a></li>
                     <li><a href="maintainanceIssues.html"><i class="glyphicon glyphicon-plus"></i> Add issue</a></li>
                     <li><a href="paid.html"><i class="glyphicon glyphicon-eye-open"></i> View payments</a></li>
-                    <li><a href="viewReturned.html"><i class="glyphicon glyphicon-eye-open"></i>  Keys Returned</a></li>
+                    <!-- <li><a href="viewReturned.html"><i class="glyphicon glyphicon-eye-open"></i>  Keys Returned</a></li> -->
                     <li><a href="viewNotReturned.html"><i class="glyphicon glyphicon-eye-open"></i>  Keys Taken</a></li>
                     <li><a href="viewVisitors.html"><i class="glyphicon glyphicon-eye-open"></i> view visitors</a></li>
                    <!--  <li><a href="viewManagers.html"><i class="glyphicon glyphicon-eye-open"></i> view Managers</a></li> -->

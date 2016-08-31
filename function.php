@@ -129,17 +129,17 @@ function managersProfile($id){
 	$select="SELECT firstName, lastName, managerId, email , id From admin WHERE managerId='$id'";
 	return $this->query($select);
 }
-function issuesNotResolved(){
-	$select="SELECT issue,  location,reporter, issueStatus FROM maintainceissues WHERE status='not resolved'";
-	return $this->query($select);
+// function issuesNotResolved(){
+// 	$select="SELECT issue,  location,reporter, issueStatus FROM maintainceissues WHERE status='not resolved'";
+// 	return $this->query($select);
 
-}
+// }
 
-function issuesResolved(){
-	$select="SELECT issue,  location,reporter, issueStatus FROM maintainceissues WHERE status='resolved'";
-	return $this->query($select);
+// function issuesResolved(){
+// 	$select="SELECT issue,  location,reporter, issueStatus FROM maintainceissues WHERE status='resolved'";
+// 	return $this->query($select);
 
-}
+// }
 
 function selectAllIssues(){
 	$select="SELECT issue, location,reporterName, issueStatus, contact,id, date_reported FROM maintainceissues ORDER BY date_reported DESC";
@@ -189,13 +189,13 @@ function selectPayment(){
 	$select="SELECT name, amount, studentId, payDate, type,theId FROM payment ";
 	return $this->query($select);
 }
-function searchPayment($payment){
-	$select="SELECT name, amount, studentId, payDate FROM payment WHERE name LIKE '$payment%'";
+function searchPayment($name){
+	$select="SELECT name, amount, studentId, type,payDate,theId FROM payment WHERE name LIKE '$name%'";
 	return $this->query($select);
 }
-function search($item){
+function search($name){
  $select="SELECT firstName, lastName,studentId,email,contact,hostelName,roomNo,academicYear, 
- 	roomKeyStatus, lockerKeyStatus,issueDate, Id ,semester, yearGroup FROM students WHERE firstName LIKE '$item%'";
+ 	roomKeyStatus, lockerKeyStatus,issueDate, Id ,semester, yearGroup FROM students WHERE firstName LIKE '$name%'";
  	return $this->query($select);
 
 }
@@ -245,10 +245,26 @@ function updateRoom($id,$room){
 
 }
 
-// function forgottenPassword($email){
-// 	$select ="SELECT password from admin WHERE email='$email'";
-// 	return $this->query($select);
-// }
+function searchVisitor($name){
+	$select="SELECT  visitorId, name, person_visited, room_visited, host_contact, visitor_contact,date_of_visit FROM visitor WHERE person_visited LIKE '$name%'";
+	return $this->query($select);
 }
+function searchRoomKey($key){
+	$select="SELECT keyId, room_key FROM roomkeyno WHERE room_key LIKE '$key%'";
+	return $this->query($select);
+
+}
+function searchLockerKey($key){
+	$select="SELECT lockerKey FROM lockerKey WHERE lockerKey LIKE '$key%'";
+	return $this->query($select);
+
+}
+
+function searchIssues($status){
+	$select="SELECT issue, location,reporterName, issueStatus, contact,id, date_reported FROM maintainceissues WHERE issueStatus LIKE '$status%'";
+	return $this->query($select);
+}
+}
+  
 
 ?>

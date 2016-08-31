@@ -23,12 +23,12 @@
 	           <div class="col-md-5">
 	              <div class="row">
 	                <div class="col-lg-12">
-	                  <!-- <div class="input-group form">
-	                       <input type="text" class="form-control" placeholder="Search...">
+	                  <div class="input-group form">
+	                       <input type="text" class="form-control" placeholder="Search..." name="issues" id="issues">
 	                       <span class="input-group-btn">
-	                         <button class="btn btn-primary" type="button">Search</button>
+	                         <button class="btn btn-primary" type="button" onclick="searchIssues()">Search</button>
 	                       </span>
-	                  </div> -->
+	                  </div>
 	                </div>
 	              </div>
 	           </div>
@@ -99,6 +99,19 @@
 						</div>
 		  				<div class="panel-body">
 		  					<table class="table table-striped" id="allIssues">
+                              <th>Issue</th>
+                              <th>Reporter's Name</th>
+                              
+                              <th>Location</th>
+                              <th>Contact</th>
+                              <th>Status</th>
+                               <th>Date</th>
+                              <th>Update</th>
+
+		  					</table>
+
+
+		  					<table class="table table-striped" id="search">
                               <th>Issue</th>
                               <th>Reporter's Name</th>
                               

@@ -23,12 +23,12 @@
 	           <div class="col-md-5">
 	              <div class="row">
 	                <div class="col-lg-12">
-	                  <!-- <div class="input-group form">
-	                       <input type="text" class="form-control" placeholder="Search...">
+	                  <div class="input-group form">
+	                       <input type="text" class="form-control" placeholder="Search..." id="visitor" name="visitor">
 	                       <span class="input-group-btn">
-	                         <button class="btn btn-primary" type="button">Search</button>
+	                         <button class="btn btn-primary" type="button" onclick="searchVisitor()">Search</button>
 	                       </span>
-	                  </div> -->
+	                  </div>
 	                </div>
 	              </div>
 	           </div>
@@ -63,7 +63,7 @@
                     <li><a href="visitors.html"><i class="glyphicon glyphicon-plus"></i> Add a visitor</a></li>
                     <li><a href="maintainanceIssues.html"><i class="glyphicon glyphicon-plus"></i> Add issue</a></li>
                     <li><a href="paid.html"><i class="glyphicon glyphicon-eye-open"></i> View payments</a></li>
-                    <li><a href="viewReturned.html"><i class="glyphicon glyphicon-eye-open"></i>  Keys Returned</a></li>
+                    <!-- <li><a href="viewReturned.html"><i class="glyphicon glyphicon-eye-open"></i>  Keys Returned</a></li> -->
                     <li><a href="viewNotReturned.html"><i class="glyphicon glyphicon-eye-open"></i>  Keys Taken</a></li>
                     <li><a href="viewVisitors.html"><i class="glyphicon glyphicon-eye-open"></i> view visitors</a></li>
                     <!-- <li><a href="viewManagers.html"><i class="glyphicon glyphicon-eye-open"></i> view Managers</a></li> -->
@@ -99,6 +99,21 @@
 						</div>
 		  				<div class="panel-body">
 		  					<table class="table table-striped" id="visitors">
+                              <th>Visitor's name</th>
+                              <th>Person visited</th>
+                              
+                              <th>Room </th>
+                              <th>Visitor's contact</th>
+                              <th>Host's contact</th>
+                              <th>Date</th>
+                               <th>Edit</th>
+                             
+                              
+
+		  					</table>
+
+
+		  					<table class="table table-striped" id="search">
                               <th>Visitor's name</th>
                               <th>Person visited</th>
                               

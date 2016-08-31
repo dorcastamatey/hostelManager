@@ -52,10 +52,13 @@ function search(){
 	var url="controller.php?cmd=28&item="+search;
 	var display=sendRequest(url);
 	
-
+ //prompt("u",url);
+ 
 	var table=document.getElementById("theSearch");
 	var theRow=table.rows.length;
-	for(var count=1; count<=display.message.length; count++){
+	var num=(display.message.length-1);
+	//alert(num);
+	for(var count=1; count<=num; count++){
 
 	var row=table.insertRow(theRow);
 	var cell1=row.insertCell(0);
@@ -70,8 +73,8 @@ function search(){
 	var cell10=row.insertCell(9);
 	var cell11=row.insertCell(10);
 	
-	var cell13=row.insertCell(11);
-	var cell14=row.insertCell(12);
+	var cell12=row.insertCell(11);
+	//var cell13=row.insertCell(12);
 
 
 	cell1.innerHTML=display.message[count].firstName;
@@ -85,14 +88,14 @@ function search(){
 	cell8.innerHTML=display.message[count].academicYear;
 	cell9.innerHTML=display.message[count].issueDate;
 	cell10.innerHTML=display.message[count].hostelName;
-	cell11.innerHTML=display.message[count].roomNo;
-	cell13.innerHTML="<a href='viewKeyStatus.html?id="+display.message[count].studentId +"' ><i class='glyphicon glyphicon-eye-open'></i> </a>";
+	//cell11.innerHTML=display.message[count].roomNo;
+	cell11.innerHTML="<a href='viewKeyStatus.html?id="+display.message[count].studentId +"' ><i class='glyphicon glyphicon-eye-open'></i> </a>";
 	
 	
-	cell14.innerHTML="<a href='updateStudents.html?first="+display.message[count].firstName+"&last="+display.message[count].lastName+"&studentId="+display.message[count].studentId+"&yearGroup="+display.message[count].contact+"&contact="+display.message[count].email+"&email="+display.message[count].hostelName+"&semester="+display.message[count].semester+"&academicYear="+
-	display.message[count].yearGroup+"&issueDate="+display.message[count].issueDate+"&hostelName="+display.message[count].academicYear+"&roomNo="+display.message[count].roomNo+"&roomKeyStatus="+display.message[count].roomKeyStatus+"&lockerKeyStatus="+display.message[count].lockerKeyStatus+"&id="+display.message[count].theId+"'><i class='glyphicon glyphicon-pencil'></i></a>";
+	cell12.innerHTML="<a href='updateStudents.html?first="+display.message[count].firstName+"&last="+display.message[count].lastName+"&studentId="+display.message[count].studentId+"&yearGroup="+display.message[count].yearGroup+"&contact="+display.message[count].contact+"&email="+display.message[count].email+"&semester="+display.message[count].semester+"&academicYear="+
+	display.message[count].academicYear+"&issueDate="+display.message[count].issueDate+"&hostelName="+display.message[count].hostelName+"&roomNo="+display.message[count].roomNo+"&keyNo="+display.message[count].roomKeyNo+"&roomKeyStatus="+display.message[count].roomKeyStatus+"&lockerKeyStatus="+display.message[count].lockerKeyStatus+
+	"&id="+display.message[count].Id+"&locker="+display.message[count].lockerKeyId+"'><i class='glyphicon glyphicon-pencil'></i></a>";
 	
-
 
 
 }
@@ -120,6 +123,8 @@ function searchPayment(){
 	var cell2=row.insertCell(1); 
 	var cell3=row.insertCell(2);
 	var cell4=row.insertCell(3);
+	var cell5=row.insertCell(4);
+	var cell6=row.insertCell(5);
 	
 
 	cell1.innerHTML=display.message[count].name;
@@ -127,6 +132,8 @@ function searchPayment(){
 	
 	cell3.innerHTML=display.message[count].studentId;
 	cell4.innerHTML=display.message[count].payDate;
+	cell5.innerHTML=display.message[count].payDate;
+	cell6.innerHTML="<a href='editPayment.html?name="+display.message[count].name+"&studentId="+display.message[count].studentId+"&amount="+display.message[count].amount+"&type="+display.message[count].type+"&payId="+display.message[count].theId+"'>Edit</a>";
 	
 
 }
@@ -168,15 +175,18 @@ function pullData(){
 	theId=split15[0];
 	var lockerKeyId=variables[16];
 
+	var hostel=hostelName.replace(/%20/g, " ");
+	var theContact=contact.replace(/%20/g, " ");
+
 
 	
 
 	document.getElementById('firstName').value=firstName;
 	document.getElementById('lastName').value=lastName;
 	document.getElementById('studentId').value=studentId;
-	document.getElementById('contact').value=contact;
+	document.getElementById('contact').value=theContact;
 	document.getElementById('email').value=email;
-	document.getElementById('hostelName').value=hostelName;
+	document.getElementById('hostelName').value=hostel;
 	document.getElementById('roomName').value=roomNo;
 	document.getElementById('keyNo').value=keyNo;
 	document.getElementById('theDate').value=theDate;
@@ -289,13 +299,18 @@ function populateVisitor(){
 	var visitor5=variables[5].split("&");
 	var host_contact=visitor5[0];
 	visitorId=variables[6];
+	var theName=Name.replace(/%20/g, " ");
+	var thePerson_visted=person_visited.replace(/%20/g, " ");
+	var theRoom=room_visited.replace(/%20/g, " ");
+	var vContact=visitor_contact.replace(/%20/g, " ");
+	var hContact=host_contact.replace(/%20/g, " ");
 	
 
-	 document.getElementById("visitor").value=Name;
-	 document.getElementById("person").value=person_visited;
-	 document.getElementById("room").value=room_visited;
-	 document.getElementById("contact").value=visitor_contact;
-	 document.getElementById("host_contact").value=host_contact;
+	 document.getElementById("visitor").value=theName;
+	 document.getElementById("person").value=thePerson_visted;
+	 document.getElementById("room").value=theRoom;
+	 document.getElementById("contact").value=vContact;
+	 document.getElementById("host_contact").value=hContact;
 
 }
 function editVisitor(){
@@ -345,6 +360,7 @@ function fillTextFields(){
 }
 
 function viewVisitors(){
+	remove_div("search");
 	var url2="controller.php?cmd=31";
 	
 	var display= sendRequest(url2);
@@ -420,16 +436,7 @@ function updateManager(){
 	}
 
 }
-function issues(){
-	var name=$("#name").val();
-	var problem=$("#problem").val();
-	var hostel=$("#hostel").val();
-	var roomNo=$("#roomNo").val();
-	var contact=$("#contact").val();
 
-	var url3="controller.php?cmd=3 & name="+name+"&problem="+problem+"&hostel="+hostel+"&roomNo="+roomNo+"&contact="+contact;
-	var add3=sendRequest(url3);
-}
 var issueId=0;
 function populateIssues(){
 	var issues=window.location.search.substring(1);
@@ -444,12 +451,16 @@ function populateIssues(){
 	var variable4=variables[4].split("&");
 	var contact=variable4[0];
 	issueId=variables[7];
-	//alert(issueId);
+	var thisName=name.replace("%20", " ");
+	var thisProblem=problem.replace(/%20/g, " ");
+	var thisLocation=location.replace(/%20/g, " ");
+	var thisContact=contact.replace(/%20/g, " ");
+	//alert(thisLocation);
 
-	document.getElementById("name").value=name;
-	document.getElementById("problem").value=problem;
-	document.getElementById("location").value=location;
-	document.getElementById("contact").value=contact;
+	document.getElementById("name").value=thisName;
+	document.getElementById("problem").value=thisProblem;
+	document.getElementById("location").value=thisLocation;
+	document.getElementById("contact").value=thisContact;
 
 }
 function updateIssues(){
@@ -604,10 +615,13 @@ function populatePayment(){
 	var type=variable4[0];
 	 id=variables[5];
 
-	 document.getElementById("fullName").value=name;
+	 var theName=name.replace(/%20/g, " ");
+	 var theType=type.replace(/%20/g, " ");
+
+	 document.getElementById("fullName").value=theName;
 	 document.getElementById("amount").value=amount;
 	 document.getElementById("studentId").value=studentId;
-	 document.getElementById("type").value=type;
+	 document.getElementById("type").value=theType;
 
 }
 
@@ -756,103 +770,50 @@ function login(){
 	var url="controller.php?cmd=23&managerId="+managerId+"&password="+password;
 	//prompt("m",url);
 	var display =sendRequest(url);
-	for(var count=0; count<display.message.length; count++){
-		var id=display.message[count].managerId;
-		var pass=display.message[count].password;
-	if(managerId==id&password==pass){
+	if(display.result==0){
+		document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-danger fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Sorry!!</strong> Password or ID not correct.</div></div>';
+	}
 
-	window.location.href="viewStudents.html";
-}
-else {
-	document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-info fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Sorry!!</strong> Password or ID not correct.</div></div>';
-    window.location.href="login.html";
-}
-}
-
+	if(display.result==1){
+		window.location.href="viewStudents.html";
+	}
 
 }
 function changePassword(){
     var oldPassword=$("#oldPassword").val();
 	var newPassword=$("#newPassword").val();
-	var confirm=$("#confirmPassword").val();
+	//var confirm=$("#confirmPassword").val();
 	var url="controller.php?cmd=24";
 	
 	var display =sendRequest(url);
-	if(newPassword!=confirm){
-		alert("passwords do not march");
-		window.location.href="changePassword.html";
+	
+	var num=display.message.length;
+	
+	for(var count=1; count< num; count++){
+		//alert(num);
+	
+
+			if(display.message[count].password!=oldPassword){
+
+		    document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-danger fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Try Again!!</strong> Old Password is not correct.</div></div>';
+		//window.location.href="changePassword.html";
 	}
-	for(var count=1; count<=display.message.length; count++){
 		
 		if(display.message[count].password==oldPassword){
 		var url2="controller.php?cmd=25&newPassword="+newPassword;
+		//prompt("u",url);
 		var display =sendRequest(url2);
 		
+	     if(display.result==1){
+		     document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-success fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Hurray!!</strong> Password was successfully updated.</div></div>';
+	 }
+		
 
-	}
-
-	if(display.message[count].password!=oldPassword){
-
-		document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-info fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Hurray!!</strong> Passwords do not match.</div></div>';
-		window.location.href="changePassword.html";
-	}
-	if(display.result==1){
-		document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-success fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Hurray!!</strong> Password was successfully updated.</div></div>';
-	}
-	if(display.result==0){
-		document.getElementById("message").innerHTML='<div align="center"><div class="alert alert-danger fade in radius-bordered alert-shadowed"><button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-times"></i><strong>Sorry!!</strong> Password was not updated. Try Again!!</div></div>';
-
-	}
-
-
+	}	
 }
 
 
-}
-function selectReturned(){
-	remove_div("theSearch");
-    var url4="controller.php?cmd=5";
-      
-	var display =sendRequest(url4);
-	var table1=document.getElementById("students");
-	var myRow= table1.rows.length;
-	for(var count=1; count<display.message.length; count++){
 
-	var row=table1.insertRow(myRow);
-	var cell1=row.insertCell(0);
-	var cell2=row.insertCell(1); 
-	var cell3=row.insertCell(2);
-	var cell4=row.insertCell(3);
-	var cell5=row.insertCell(4);
-	var cell6=row.insertCell(5);
-	var cell7=row.insertCell(6);
-	var cell8=row.insertCell(7);
-	var cell9=row.insertCell(8);
-	var cell10=row.insertCell(9);
-	var cell11=row.insertCell(10);
-	var cell12=row.insertCell(11);
-	var cell13=row.insertCell(12);
-	var cell14=row.insertCell(13);
-
-	cell1.innerHTML=display.message[count].firstName;
-	cell2.innerHTML=display.message[count].lastName;
-	cell3.innerHTML=display.message[count].studentId;
-	cell4.innerHTML=display.message[count].yearGroup;
-	cell5.innerHTML=display.message[count].contact;
-	cell6.innerHTML=display.message[count].email;
-	cell7.innerHTML=display.message[count].semester;
-	cell8.innerHTML=display.message[count].academicYear;
-	cell9.innerHTML=display.message[count].issueDate;
-	cell10.innerHTML=display.message[count].hostelName;
-	cell11.innerHTML=display.message[count].roomNo;
-	cell12.innerHTML=display.message[count].roomKeyStatus;
-	cell13.innerHTML=display.message[count].lockerKeyStatus;
-	cell14.innerHTML="<a href='updateStudents.html?first="+display.message[count].firstName+"&last="+display.message[count].lastName+"&studentId="+display.message[count].studentId+"&yearGroup="+display.message[count].yearGroup+"&contact="+display.message[count].email+"&semester="+display.message[count].semester+"&academicYear="+display.message[count].academicYear+
-	"&issueDate="+display.message[count].issueDate+"&hostelName="+display.message[count].hostelName+"&roomNo="+display.message[count].roomNo+"&roomKeyStatus="+display.message[count].roomKeyStatus+"&lockerKeyStatus="+display.message[count].lockerKeyStatus+"&id="+display.message[count].theId+"'>Update</a>";
-	
-	
-
-}
 }
 
 
@@ -894,16 +855,19 @@ var url4="controller.php?cmd=4";
 	cell12.innerHTML=display.message[count].roomKeyStatus;
 	cell13.innerHTML=display.message[count].lockerKeyStatus;
 	cell14.innerHTML="<a href='updateStudents.html?first="+display.message[count].firstName+"&last="+display.message[count].lastName+"&studentId="+display.message[count].studentId+"&yearGroup="+display.message[count].yearGroup+"&contact="+display.message[count].email+"&semester="+display.message[count].semester+"&academicYear="+display.message[count].academicYear+
-	"&issueDate="+display.message[count].issueDate+"&hostelName="+display.message[count].hostelName+"&roomNo="+display.message[count].roomNo+"&roomKeyStatus="+display.message[count].roomKeyStatus+"&lockerKeyStatus="+display.message[count].lockerKeyStatus+"&id="+display.message[count].theId+"'>Update</a>";
+	"&issueDate="+display.message[count].issueDate+"&hostelName="+display.message[count].hostelName+"&roomNo="+display.message[count].roomNo+"&roomKeyStatus="+display.message[count].roomKeyStatus+"&lockerKeyStatus="+display.message[count].lockerKeyStatus+"&id="+display.message[count].theId+"'></a>";
 	    if(display.message[count].roomKeyStatus=="Taken" ){ 
 
 		
 		cell12.style.backgroundColor="red";
 
 	}
-	if(display.message[count].roomKeyStatus=="Returned"){
+	if(display.message[count].roomKeyStatus=="Returned" || display.message[count].roomKeyStatus=="Paid"){
 		cell12.style.backgroundColor="green";
 	}
+	// if(display.message[count].roomKeyStatus=="Paid" ){
+	// 	cell12.style.backgroundColor="green";
+	// }
 
 	if(display.message[count].lockerKeyStatus=="Taken" ){ 
 
@@ -911,9 +875,13 @@ var url4="controller.php?cmd=4";
 		cell13.style.backgroundColor="red";
 
 	}
-	if(display.message[count].lockerKeyStatus=="Returned"){
+	if(display.message[count].lockerKeyStatus=="Returned" || display.message[count].lockerKeyStatus=="Paid"){
 		cell13.style.backgroundColor="green";
 	}
+
+	// if(display.message[count].lockerKeyStatus=="paid"){
+	// 	cell13.style.backgroundColor="green";
+	// }
 
 	cell12.style.color="white";
 	cell13.style.color="white";
@@ -952,7 +920,8 @@ var url4="controller.php?cmd=8";
 }
 
 function selectAllIssues(){
-var url4="controller.php?cmd=12";
+	remove_div("search");
+     var url4="controller.php?cmd=12";
 
 	var display =sendRequest(url4);
 	var table1=document.getElementById("allIssues");
@@ -1120,6 +1089,7 @@ function updateRoom(){
 	
 }
 function selectRoomKey(){
+	remove_div("search");
 	var url="controller.php?cmd=37";
 	
 	var display= sendRequest(url);
@@ -1138,6 +1108,7 @@ function selectRoomKey(){
 }
 
 function selectLockerKey(){
+	remove_div("search");
 	var url="controller.php?cmd=43";
 	
 	var display= sendRequest(url);
@@ -1171,4 +1142,124 @@ function selectRoom(){
 	cell2.innerHTML="<a href='updateRooms.html?roomNo="+display.message[count].roomNo+"&roomsId="+display.message[count].roomsId+"'>Update</a>";
 
 }
+}
+function searchVisitor(){
+	remove_div("visitors");
+	show("search");
+
+	var name=$("#visitor").val();
+	var url2="controller.php?cmd=44&name="+name;
+	
+	var display= sendRequest(url2);
+
+	var table1=document.getElementById("search");
+	var myRow= table1.rows.length;
+	for(var count=1; count<display.message.length; count++){
+
+	var row=table1.insertRow(myRow);
+	var cell1=row.insertCell(0);
+	var cell2=row.insertCell(1); 
+	var cell3=row.insertCell(2);
+	var cell4=row.insertCell(3);
+	var cell5=row.insertCell(4);
+	var cell6=row.insertCell(5);
+	var cell7=row.insertCell(6);
+	
+
+
+	cell1.innerHTML=display.message[count].name;
+	cell2.innerHTML=display.message[count].person_visited;
+	
+	cell3.innerHTML=display.message[count].room_visited;
+	cell4.innerHTML=display.message[count].visitor_contact;
+	cell5.innerHTML=display.message[count].host_contact;
+	cell6.innerHTML=display.message[count].date_of_visit;
+	cell7.innerHTML="<a href='editVisitor.html?name="+display.message[count].name+"&person="+display.message[count].person_visited+
+	"&room="+display.message[count].room_visited+"&contact="+display.message[count].visitor_contact+"&host="+display.message[count].host_contact+"&vId="+display.message[count].visitorId+"'> Edit</a>";
+
+}
+
+}
+function searchRoomKey(){
+	remove_div("keys");
+	show("search");
+	var room=$("#room").val();
+	var url="controller.php?cmd=46&room="+room;
+	
+	var display= sendRequest(url);
+	var table1=document.getElementById("search");
+	var myRow= table1.rows.length;
+	for(var count=1; count<display.message.length; count++){
+
+	var row=table1.insertRow(myRow);
+	var cell1=row.insertCell(0);
+	var cell2=row.insertCell(1);
+	cell1.innerHTML=display.message[count].room_key;
+	cell2.innerHTML="<a href='updateRoomKey.html?roomKey="+display.message[count].room_key+"&keyId="+display.message[count].keyId+"'>Update</a>";
+
+}
+}
+
+function searchLockerKey(){
+	remove_div("keys");
+	show("search");
+	var locker=$("#locker").val();
+	var url="controller.php?cmd=45&locker="+locker;
+	
+	var display= sendRequest(url);
+	var table1=document.getElementById("search");
+	var myRow= table1.rows.length;
+	for(var count=1; count<display.message.length; count++){
+
+	var row=table1.insertRow(myRow);
+	var cell1=row.insertCell(0);
+	var cell2=row.insertCell(1);
+	cell1.innerHTML=display.message[count].lockerKey;
+	cell2.innerHTML="<a href='updateLockerKey.html?lockerKey="+display.message[count].lockerKey+"&keyId="+display.message[count].lockerKeyId+"'>Update</a>";
+
+}
+}
+
+function searchIssues(){
+	remove_div("allIssues");
+	show("search");
+	var issues=$("#issues").val();
+	var url4="controller.php?cmd=47&issues="+issues;
+
+	var display =sendRequest(url4);
+	var table1=document.getElementById("search");
+	var myRow= table1.rows.length;
+	for(var count=1; count<display.message.length; count++){
+
+	var row=table1.insertRow(myRow);
+	var cell1=row.insertCell(0);
+	var cell2=row.insertCell(1); 
+	
+	var cell3=row.insertCell(2);
+	var cell4=row.insertCell(3);
+	var cell5=row.insertCell(4);
+	var cell6=row.insertCell(5);
+	var cell7=row.insertCell(6);
+	
+	cell1.innerHTML=display.message[count].issue;
+	cell2.innerHTML=display.message[count].reporterName;
+	
+	cell3.innerHTML=display.message[count].location;
+	cell4.innerHTML=display.message[count].contact;
+	cell5.innerHTML=display.message[count].issueStatus;
+	cell6.innerHTML=display.message[count].date_reported;
+	cell7.innerHTML="<a href='updateIssueStatus.html?issue="+display.message[count].issue+"&name="+display.message[count].reporterName+
+	"&location="+display.message[count].location+"&contact="+display.message[count].contact+"&status="+display.message[count].issueStatus
+	+"&date="+display.message[count].date_reported+"&id="+display.message[count].id+"'>Update</a>";
+
+	}
+
+
+}
+
+function filter(c){
+	var textField=document.getElementById("managerId");
+	var regex=/[^a-z]/gi;
+	textField.value=textField.value.replace(regex," ");
+
 }

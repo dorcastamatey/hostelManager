@@ -3,6 +3,9 @@
   <head>
     <title>hostel manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <META Http-Equiv="Cache-Control" Content="no-cache"/>
+    <META Http-Equiv="Pragma" Content="no-cache"/>
+    <META Http-Equiv="Expires" Content="0"/>
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- styles -->
@@ -50,10 +53,13 @@
 	                                <hr class="right">
 	                            </div>
 	                        </div> -->
-			                Manager's ID <input class="form-control" type="text" placeholder="ID" name="managerId" id="managerId">
+			                Manager's ID <input class="form-control" type="text" placeholder="ID" name="managerId" id="managerId" onkeyup="filter('managerId')" onkeydown="filter('managerId')">
 			               Password <input class="form-control" type="password" placeholder="Password" name="password" id="password">
 			                <div class="action">
 			                    <a class="btn btn-primary signup" onclick="login()">Login</a>
+			                </div> 
+			                <div class="action">
+			                    <a href="forgottenPassword.html" >Forgotten Password</a>
 			                </div> 
 
 			                               

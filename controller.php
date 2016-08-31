@@ -23,12 +23,12 @@ session_start();
     case 7;
     managers();
     break;
-    case 8;
-    issuesResolved();
-    break;
-    case 9;
-    issuesNotResolved();
-    break;
+    // case 8;
+    // issuesResolved();
+    // break;
+    // case 9;
+    // issuesNotResolved();
+    // break;
     case 10;
     updateStudents();
     break;
@@ -130,6 +130,19 @@ session_start();
     case 43;
     selectLockerKey();
     break;
+    case 44;
+    searchVisitor();
+    break;
+    case 45;
+    searchLockerKey();
+    break;
+    case 46;
+    searchRoomKey();
+    break;
+    case 47;
+    searchIssues();
+    break;
+
 }
  function addStudents(){
     include("function.php");
@@ -301,10 +314,11 @@ function addManagers(){
         $obj=new users();
         $managerId=$_REQUEST['managerId'];
         $password=$_REQUEST['password'];
+        $encryptPass=md5($password);
         //$pass=md5($password);
         //$_SESSION["managerId"];
 
-       $obj->login($managerId,$password);
+       $obj->login($managerId,$encryptPass);
        $row = $obj->fetch();
      if ($row) {
         echo '{"result":1, "message":[';
@@ -374,12 +388,7 @@ function addManagers(){
 
         include("function.php");
         $obj=new users();
-        //$name=$_REQUEST['fullName'];
-        //$studentId=$_REQUEST['studentId'];
-        //$amount=$_REQUEST['amount'];
-        //$date=date("Y.m.d");
-        //$_SESSION["password"]=$password;
-
+        
         if ($row=$obj->selectPayment())
         {
             echo '{"result":1, "message":[';
@@ -464,57 +473,6 @@ function viewStatus (){
     }
 
     
-    function issuesNotResolved(){
-
-        include("function.php");
-        $obj=new users();
-
-        if ($row=$obj->issuesNotResolved())
-        {
-            echo '{"result":1, "message":[';
-            while ($row)
-            {
-                echo json_encode($row);
-
-                $row = $obj->fetch (); 
-                if ($row){
-                    echo ",";
-                }
-            }
-            echo "]}";
-            return;
-        }
-        else{
-            echo '{"result":0, "message":"not display"}';
-            return;
-        }
-    }
-
-    function issuesResolved(){
-
-        include("function.php");
-        $obj=new users();
-
-        if ($row=$obj->issuesResolved())
-        {
-            echo '{"result":1, "message":[';
-            while ($row)
-            {
-                echo json_encode($row);
-
-                $row = $obj->fetch (); 
-                if ($row){
-                    echo ",";
-                }
-            }
-            echo "]}";
-            return;
-        }
-        else{
-            echo '{"result":0, "message":"not display"}';
-            return;
-        }
-    }
 
      function managers(){
 
@@ -693,28 +651,17 @@ function viewStatus (){
         $id=$_SESSION["managerId"];
         $password=$_REQUEST["newPassword"];
         
-        if ($row=$obj->changePassword($password,$id))
-        {
-            echo '{"result":1, "message":[';
-            while ($row)
-            {
-                echo json_encode($row);
-
-                $row = $obj->fetch (); 
-                if ($row){
-                    echo ",";
-                }
-            }
-            echo "]}";
+        if (!$obj->changePassword($password,$id))
+       {
+            echo '{"result": 0, "message": " Password did not update"}';
             echo mysql_error();
-            return;
-        }
-        else{
-            echo '{"result":0, "message":"not display"}';
-            echo mysql_error();
-            return;
-        }
+        return;
     }
+    echo '{"result": 1, "message": " Password updated successfully"}';
+    //echo mysql_error();
+    return;
+    }
+    
 
 
     function selectDetails(){
@@ -1168,17 +1115,127 @@ function selectRoom(){
             return;
         }
     }
-    // function forgottenPassword(){
-    //     $obj=new users();
-    //     $email=$_REQUEST['email'];
-    //     $row=$obj->forgottenPassword($email);
 
-    //     while($row){
-    //         echo json_encode($row);
-    //         $row=$obj->fetch();
-    //     }
+    function searchVisitor(){
+        include("function.php");
+        $obj=new users();
+        $name=$_REQUEST['name'];
 
-    // }
+        if ($row=$obj->searchVisitor($name))
+        {
+            echo '{"result":1, "message":[';
+            while ($row)
+            {
+                echo json_encode($row);
+
+                $row = $obj->fetch (); 
+                if ($row){
+                    echo ",";
+                }
+            }
+            echo "]}";
+            
+            return;
+        }
+        else{
+            echo '{"result":0, "message":"not display"}';
+            echo mysql_error();
+
+            return;
+        }
+    }
+
+    function searchRoomKey(){
+        include("function.php");
+        $obj=new users();
+        $key=$_REQUEST['room'];
+
+        if ($row=$obj->searchRoomKey($key))
+        {
+            echo '{"result":1, "message":[';
+            while ($row)
+            {
+                echo json_encode($row);
+
+                $row = $obj->fetch (); 
+                if ($row){
+                    echo ",";
+                }
+            }
+            echo "]}";
+            
+            return;
+        }
+        else{
+            echo '{"result":0, "message":"not display"}';
+            echo mysql_error();
+
+            return;
+        }
+    }
+
+    function searchLockerKey(){
+        include("function.php");
+        $obj=new users();
+        $key=$_REQUEST['locker'];
+
+        if ($row=$obj->searchLockerKey($key))
+        {
+            echo '{"result":1, "message":[';
+            while ($row)
+            {
+                echo json_encode($row);
+
+                $row = $obj->fetch (); 
+                if ($row){
+                    echo ",";
+                }
+            }
+            echo "]}";
+            
+            return;
+        }
+        else{
+            echo '{"result":0, "message":"not display"}';
+            echo mysql_error();
+
+            return;
+        }
+    }
+
+    function searchIssues(){
+        include("function.php");
+        $obj=new users();
+        $status=$_REQUEST['issues'];
+
+        if ($row=$obj->searchIssues($status))
+        {
+            echo '{"result":1, "message":[';
+            while ($row)
+            {
+                echo json_encode($row);
+
+                $row = $obj->fetch (); 
+                if ($row){
+                    echo ",";
+                }
+            }
+            echo "]}";
+            
+            return;
+        }
+        else{
+            echo '{"result":0, "message":"not display"}';
+            echo mysql_error();
+
+            return;
+        }
+    }
+
+
+            
+    
+   
 
 
 ?>
